@@ -1,0 +1,171 @@
+<style type="text/css">
+
+.app_radio {
+	overflow:hidden;
+	margin-right:0px;
+	text-shadow:0 1px 0 #000000;
+	height:338px;
+	
+	color:#999999;
+}
+
+.station {
+	overflow:auto;
+	height:252px;
+	background:#232323;
+}
+
+.control {
+	padding: 2px 0 0 10px;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	height: 36px;
+	background: #444444;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border-top: 1px solid #777777;
+}
+
+.top{
+	text-align: center;
+	color: #E9E8E8;
+	font-size: 20px;
+	font-weight: bold;
+	padding-top: 4px;
+}
+
+
+.full-width-slider input {
+    display: none;
+}
+.full-width-slider .ui-slider-track {
+    margin-left: 0px;
+	padding-bottom: 0px;
+	top: 1px;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0; 
+	padding: 0;
+	overflow:auto;
+}
+
+ul#stations li a{
+	background:#232323;
+	border-bottom: 1px solid #111111;
+    border-top: 1px solid #2E2E2E;
+    color: #eeeeee;
+    display: block;
+    padding: 3px 10px;
+    white-space: nowrap;
+	text-shadow: 0 0 3px rgba(255, 255, 255, 0.2); 
+	text-decoration: none;
+	height: 20px;
+}
+
+ul#stations li a:hover{
+	background: none repeat scroll 0 0 #444444;
+    border-bottom: 1px solid #222222;
+    border-top: 1px solid #777777;
+	height: 20px;
+	color: White; 
+}
+
+ul#stations li a span{
+	font-size: 12px; 
+	padding: 3px 0 0 2px;
+	display: block;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: lighter;
+}
+
+img:hover {
+  opacity:0.6;
+  -moz-opacity:0.6;
+  filter: alpha(opacity=60) black;
+  -khtml-opacity: 0.6;
+  }
+img:active {
+  opacity:1;
+  -moz-opacity:1;
+  filter: alpha(opacity=100) black;
+  -khtml-opacity: 1;
+  }
+#stations a.station_select { background: none repeat scroll 0 0 #444444; }
+</style>
+
+<script language="javascript">
+
+function command(cmd,id) {
+  var url="?ajax=1";
+  if(cmd=='vol'){
+	  url+='&cmd=vol';
+	  url+='&volume='+document.getElementById('volume').value;
+  } else {
+	url+='&cmd='+cmd;
+	if(!id)
+		url+='&s_id='+$(document.getElementsByClassName('station_select')).attr('id');
+	else
+		url+='&s_id='+id;
+  }
+  AJAXRequest(url, '', '');
+  return false;
+}
+
+function Volume() {    
+  if (this.sliderTimeour) clearTimeout(this.sliderTimeour);
+  this.sliderTimeour = setTimeout(function(){
+    command('vol');
+	
+	//alert('Vol');
+  },30);
+};
+</script>
+
+<div class="app_radio"  style="border-radius: 8px 8px; [#if MODE!='menu'#] width:275px;[#endif MODE#]">
+	<div class="control" style="border-radius: 0px 0px 0px 0px;">
+		<div class="top">ОнЛайн Радио</div>
+	</div>
+
+	<div class="station">
+		<ul id="stations">
+		[#if RESULT#] 
+
+		[#begin RESULT#]
+			<li><a href="#" id=[#ID#] [#if SELECT#]class=station_select[#endif SELECT#] onClick='command("play",[#ID#]);'><span>
+			[#MODE#][#name#]
+			</span></a></li>
+		[#end RESULT#]
+
+		[#else RESULT#]
+			<li><a href="#" [#if SELECT#]class=station_select[#endif SELECT#]><span>
+			Добавьте станции
+			</span></a></li>
+		[#endif RESULT#]
+
+		</ul>
+	</div>
+	<div class="control">
+		<div style="float:left;width:35px;height:35px;text-align:center"><a href="#" onClick='command("play");'><img src="/templates/app_radio/img/play.png"></a></div>
+		<div style="float:left;width:45px;height:45px;text-align:center;padding-left:3%;"><a href="#" onClick='command("stop");'><img src="/templates/app_radio/img/stop.png"></a></div>
+		<div style="float:right;width:60%;">
+			<form class="full-width-slider">
+				<input type="range" id="volume" value="[#VOLUME#]" min="0" max="100" step="1"  onChange="Volume();"/>
+			</form>
+		</div>
+
+
+	</div>
+</div>
+
+<script language="javascript">
+ $('#stations a').click(function(event){
+ $('#stations .station_select').removeClass('station_select');
+ $(this).addClass('station_select');
+ event.preventDefault()
+ })
+</script>
+<!-- Volume_timer=setTimeout('itemValueChanged("98", "'+elem.value+'")', 500); -->

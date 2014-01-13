@@ -1,0 +1,47 @@
+<p>
+<a href="?view_mode=edit_stations" class="btn"><i class="icon-plus"></i> Добавить станцию</a>
+<a href="?view_mode=import_stations" class="btn"><i class="icon-file"></i> Импортировать списком</a>
+</p>
+
+<!-- table список станций  -->
+
+[#if RESULT#]
+
+<table  align=center class="table table-inner">
+<tbody>
+
+[#begin RESULT#]
+<tr>
+ <td height=10 align=center>
+   [#name#] 
+ </td>
+ <td align=center>
+   [#stations#]
+ </td>
+ [#if "<#ACTION#>"=="admin"#]
+  <td width="1%">
+   <a href="?view_mode=edit_stations&id=[#ID#]"  title="<#LANG_EDIT#>"><i class="icon-pencil"></i></a>
+  </td> 
+  <td width="1%">
+   <a href="?view_mode=delete_stations&id=[#ID#]" onClick="return confirm('<#LANG_ARE_YOU_SURE#>')" title="<#LANG_DELETE#>"><i class="icon-remove"></i></a>
+  </td>
+ [#endif ACTION#]
+</tr>
+[#end RESULT#]
+
+</tbody>
+</table>
+
+[#else RESULT#]
+<p>
+<font color="red">Станций не найдено</font>
+</p>
+[#endif RESULT#]
+<!-- / results -->
+</td></tr></table>
+
+<p>
+Вызов:
+<br>
+<b>&#091#module name="app_radio"#&#093</b>
+</p>

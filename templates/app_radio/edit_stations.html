@@ -1,0 +1,40 @@
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+[#if OK#]
+<div class="alert alert-success"><#LANG_STRING_SUCCESS#></div>
+[#endif OK#]
+[#if ERR#]
+<div class="alert alert-error"><#LANG_FILLOUT_REQURED#></div>
+[#endif ERR#]
+<fieldset>
+[#if ID=""#]
+<legend>Добавление станции</legend>
+[#endif ID#]
+<!-- stations (text) -->
+<div class="control-group">
+ <label class="control-label"[#if ERR_stations#] style="color:red;font-weight:bold"[#endif#]>
+ Введите название
+ </label>
+ <div class="controls">
+ <textarea name="name" rows=4 cols=60 class="input span6">[#name#]</textarea>
+ </div>
+ <label class="control-label"[#if ERR_stations#] style="color:red;font-weight:bold"[#endif#]>
+ Введите URL
+ </label>
+ <div class="controls">
+ <textarea name="stations" rows=4 cols=60 class="input span6">[#stations#]</textarea>
+ </div>
+</div>
+<div class="form-actions">
+ [#if ID!=""#]
+ <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+ [#else ID#]
+ <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+ [#endif ID#]
+ <a href="?" class="btn"><#LANG_CANCEL#></a>
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+<input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+<input type="hidden" name="mode" value="update">
+</div>
+</fieldset>
+</form>

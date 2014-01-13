@@ -1,0 +1,15 @@
+<big>Онлайн радио</big>
+<hr size="1">
+
+[#if VIEW_MODE="view_stations" || VIEW_MODE=""#]
+	[#inc view_stations.html#]
+[#endif VIEW_MODE#]
+ 
+[#if VIEW_MODE="import_stations"#]
+	[#inc import_stations.html#]
+[#endif VIEW_MODE#]
+ 
+[#if VIEW_MODE="edit_stations"#]
+	[#inc edit_stations.html#]
+[#endif VIEW_MODE#]
+
