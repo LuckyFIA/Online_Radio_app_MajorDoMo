@@ -1,3 +1,12 @@
+<form action="?" method="get" name="terminal_change">
+	Проигрывать на терминале: 
+	<select name="select_terminal" onchange="document.terminal_change.submit();">
+            <option value=0>Выберите</option>
+			[#begin LIST_TERMINAL#]
+            <option value="[#NAME#]"[#if NAME="<#PLAY_TERMINAL#>"#] selected[#endif#]>[#NAME#]</option>
+            [#end LIST_TERMINAL#]
+        </select>
+</form>
 <p>
 <a href="?view_mode=edit_stations" class="btn"><i class="icon-plus"></i> Добавить станцию</a>
 <a href="?view_mode=import_stations" class="btn"><i class="icon-file"></i> Импортировать списком</a>
@@ -7,7 +16,7 @@
 
 [#if RESULT#]
 
-<table  align=center class="table table-inner">
+<table  align=center class="table table-condensed">
 <tbody>
 
 [#begin RESULT#]
@@ -41,7 +50,7 @@
 </td></tr></table>
 
 <p>
-Вызов:
+Вызов модуля в меню:
 <br>
-<b>&#091#module name="app_radio"#&#093</b>
+<b>&#091#module name="app_radio" mode="menu"#&#093</b>
 </p>

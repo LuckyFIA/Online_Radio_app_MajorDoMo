@@ -11,15 +11,14 @@ $mpd = new mpd($terminal['HOST'], $terminal['PLAYER_PORT'], $terminal['PLAYER_PA
 if($mpd->connected) {
     if ($cmd=='play') {
 		$mpd->PLClear();
-		
-      // $out['PLAY']=preg_replace('/\\\\$/is', '', $out['PLAY']);
-       $path=$out['PLAY'];
-      echo $path;
-		$mpd->PLAdd(preg_replace('/\\\\$/is', '', $out['PLAY']));
+		$path=$out['PLAY'];
+        $mpd->PLAdd(preg_replace('/\\\\$/is', '', $out['PLAY']));
 		$mpd->Play();  
-		
-    } 
+	} 
 	if ($cmd=='stop') {
+		$mpd->Stop();
+    }
+	if ($com=='stop') {
 		$mpd->Stop();
     }
 	if ($cmd=='vol') {
@@ -28,12 +27,5 @@ if($mpd->connected) {
 	$mpd->Disconnect();
 } else {
 	echo "Error: " .$mpd->errStr;
-
-    	
 }
-
-
-
-//$mpd->PLClear(); 
-
 ?>

@@ -5,7 +5,7 @@
 * module for MajorDoMo project
 * @author Fedorov Ivan <4fedorov@gmail.com>
 * @copyright Fedorov I.A.
-* @version 0.1 January 2014
+* @version 1.0 January 2014
 */
 
 class app_radio extends module {
@@ -119,6 +119,16 @@ function admin(&$out) {
 		$out['SET_DATASOURCE']=1;
 	}
 	if ($this->data_source=='app_radio' || $this->data_source=='') {
+		
+		global $select_terminal;
+		if($select_terminal!='')
+			setGlobal('RadioSetting.PlayTerminal', $select_terminal);	
+		$out['PLAY_TERMINAL']=getGlobal('RadioSetting.PlayTerminal');
+		$res=SQLSelect("SELECT NAME FROM terminals WHERE PLAYER_TYPE NOT LIKE 'foobar'");
+		if ($res[0]) {
+			$out['LIST_TERMINAL']=$res;
+		}
+		
 		if ($this->view_mode=='' || $this->view_mode=='view_stations') {
 			$this->view_stations($out);
 		}
@@ -142,15 +152,15 @@ function admin(&$out) {
 * @access public
 */
 function usual(&$out) {
-
+if ($this->com) {
+  $com='stop';
+ }
  $this->view_stations($out);
  
  $current_volume=getGlobal('RadioSetting.VolumeLevel');
  $last_stationID=getGlobal('RadioSetting.LastStationID');
  $out['VOLUME']=$current_volume;
- //$out['MODE']=$this->mode;
-		
-//echo '=>'.$out['MODE'].'<=';
+
 		if($last_stationID){
 			 for($i=0;$i<count($out['RESULT']);$i++) {
 				if($last_stationID==$out['RESULT'][$i]['ID']){
@@ -161,7 +171,7 @@ function usual(&$out) {
 		} else {
 			$out['RESULT'][0]['SELECT']=1;
 		}	
-		
+	
 	global $ajax;
 	if ($ajax!='') {
 		global $cmd;
@@ -195,7 +205,9 @@ function usual(&$out) {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 //-----------
-			$terminals=SQLSelect("SELECT * FROM terminals WHERE CANPLAY=1 ORDER BY TITLE");
+			$play_terminal=getGlobal('RadioSetting.PlayTerminal');
+				echo $play_terminal;		
+			$terminals=SQLSelect("SELECT * FROM terminals WHERE NAME='$play_terminal'");
 			$terminal=$terminals[0];
 		    if ($terminal['PLAYER_USERNAME'] && $terminal['PLAYER_PASSWORD']) {
 				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC ) ;
@@ -214,12 +226,6 @@ function usual(&$out) {
 			
 			if ($terminal['PLAYER_TYPE']=='vlc' || $terminal['PLAYER_TYPE']=='') {
 				include(DIR_MODULES.'app_radio/player/vlc.php');
-				if ($cmd=='play') {
-				
-				}
-				if ($cmd=='play') {
-				
-				}
 			} elseif ($terminal['PLAYER_TYPE']=='xbmc') {
 				include(DIR_MODULES.'app_radio/player/xbmc.php');
 			} elseif ($terminal['PLAYER_TYPE']=='foobar') {
@@ -228,13 +234,12 @@ function usual(&$out) {
 				include(DIR_MODULES.'app_radio/player/vlcweb.php');
 			} elseif ($terminal['PLAYER_TYPE']=='mpd') {
 				include(DIR_MODULES.'app_radio/player/mpd.php');
-			}
-			
+			}			
 			curl_close($ch);
 		}
 	
 		if (!$this->intCall) {
-			echo "OK_Radio";
+			echo "OK";
 			if ($res) {
 				echo $res;
 			}
@@ -292,7 +297,6 @@ function usual(&$out) {
 			global $file;
 			if (file_exists($file)) {
 				$tmp=LoadFile($file);
-				//$tmp=str_replace("\r", '', $tmp);
 				$lines=mb_split("\n", $tmp);
 				$total_lines=count($lines);
 				for($i=0;$i<$total_lines;$i++) {
@@ -334,20 +338,7 @@ function usual(&$out) {
  function install($parent_name="") {
 	$className='Radio';
 	$objectName='RadioSetting';
-	//$propertis=array;
-	// $propertis['NAME']=array('LastStationID','VolumeLevel');
-	// $propertis['VALUE']=array(0,0);
-	
-	
-	// $propertis=array('NAME' => array('LastStationID',
-									 // 'VolumeLevel'
-									 // ),
-					 // 'VALUE'=> array(0,
-									 // 0
-									 // )
-					// );
-	
-	 $propertis=array('LastStationID','VolumeLevel');
+	$propertis=array('LastStationID','VolumeLevel','PlayTerminal');
 
 	$rec=SQLSelectOne("SELECT ID FROM classes WHERE TITLE LIKE '".DBSafe($className)."'");
 	if (!$rec['ID']) {
@@ -376,7 +367,6 @@ function usual(&$out) {
 			$prop_rec['OBJECT_ID']=$obj_rec['ID'];
 			$prop_rec['ID']=SQLInsert('properties',$prop_rec);
 		}
-	//$pvalues_rec=SQLSelectOne("SELECT ID FROM properties WHERE OBJECT_ID='".$obj_rec['ID']."' AND TITLE LIKE '".DBSafe($propertiName[$i])."'");
 	}
   parent::install($parent_name);
  }

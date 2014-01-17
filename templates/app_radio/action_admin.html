@@ -1,4 +1,7 @@
 <big>Онлайн радио</big>
+<div class="span float-right">
+	<a href="#modal" role="button" class="btn btn-info" style="margin:0;" data-toggle="modal">О модуле <i class="icon-info-sign icon-white"></i></a>
+</div>
 <hr size="1">
 
 [#if VIEW_MODE="view_stations" || VIEW_MODE=""#]
@@ -13,3 +16,38 @@
 	[#inc edit_stations.html#]
 [#endif VIEW_MODE#]
 
+<div id="modal" class="modal hide">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h4>Онлайн радио</h4>
+	</div>
+	<div class="modal-body">
+		<p> Модуль для проигрывания онлайн-радио.<br>
+		Обсуждение модуля <a href="http://smartliving.ru/forum/viewtopic.php?f=5&t=1402" target="_blank">здесь</a>.<br>
+		<hr size="1">
+		Благодарности можно слать:
+			  <ul>
+			  <li>Яндекс.Деньги:
+				<ul>
+				  <ul>
+					<li>410011477255886 </li>
+				  </ul>
+				</ul>
+			  </li>
+			  <li>WebMoney:  </li>
+				<ul>
+				  <ul>
+					<li>Z284887760811</li>
+					<li>R238851062873</li>
+				  </ul>
+				</ul>
+			</ul>
+		</p>
+		<p class="float-left"></p>
+	</div>
+	
+	<div class="modal-footer">
+		<div class="pull-left">Best regards!<br>@LuckyFIA :)</div>
+		<a href="#" class="btn" style="margin:2;" data-dismiss="modal">Закрыть</a>
+	</div>
+</div>

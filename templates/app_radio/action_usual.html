@@ -100,7 +100,7 @@ img:active {
 <script language="javascript">
 
 function command(cmd,id) {
-  var url="?ajax=1";
+  var url="/popup/app_radio.html?ajax=1";
   if(cmd=='vol'){
 	  url+='&cmd=vol';
 	  url+='&volume='+document.getElementById('volume').value;
@@ -127,7 +127,7 @@ function Volume() {
 
 <div class="app_radio"  style="border-radius: 8px 8px; [#if MODE!='menu'#] width:275px;[#endif MODE#]">
 	<div class="control" style="border-radius: 0px 0px 0px 0px;">
-		<div class="top">ОнЛайн Радио</div>
+		<div class="top">Онлайн Радио</div>
 	</div>
 
 	<div class="station">
@@ -168,4 +168,3 @@ function Volume() {
  event.preventDefault()
  })
 </script>
-<!-- Volume_timer=setTimeout('itemValueChanged("98", "'+elem.value+'")', 500); -->
