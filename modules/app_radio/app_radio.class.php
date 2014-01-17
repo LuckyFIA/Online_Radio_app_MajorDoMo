@@ -152,9 +152,7 @@ function admin(&$out) {
 * @access public
 */
 function usual(&$out) {
-if ($this->com) {
-  $com='stop';
- }
+
  $this->view_stations($out);
  
  $current_volume=getGlobal('RadioSetting.VolumeLevel');
