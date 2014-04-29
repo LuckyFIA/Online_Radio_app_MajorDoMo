@@ -296,7 +296,8 @@ class mpd {
 	 *
 	 * Sets the mixer volume to <newVol>, which should be between 1 - 100.
      */
-	function SetVolume($newVol) {
+	function SetVolume($newVol, $mode = 1) {
+		
 		if ( $this->debugging ) echo "mpd->SetVolume()\n";
 		if ( ! is_numeric($newVol) ) {
 			$this->errStr = "SetVolume() : argument 1 must be a numeric value";
@@ -306,20 +307,44 @@ class mpd {
         // Forcibly prevent out of range errors
 		if ( $newVol < 0 )   $newVol = 0;
 		if ( $newVol > 100 ) $newVol = 100;
-
-        // If we're not compatible with SETVOL, we'll try adjusting using VOLUME
-        if ( $this->_checkCompatibility(MPD_CMD_SETVOL) ) {
-            if ( ! is_null($ret = $this->SendCommand(MPD_CMD_SETVOL,$newVol))) $this->volume = $newVol;
-        } else {
-    		$this->RefreshInfo();     // Get the latest volume
-    		if ( is_null($this->volume) ) {
-    			return NULL;
-    		} else {
-    			$modifier = ( $newVol - $this->volume );
-                if ( ! is_null($ret = $this->SendCommand(MPD_CMD_VOLUME,$modifier))) $this->volume = $newVol;
-    		}
-        }
-
+//==================
+		$this->RefreshInfo();
+		if($mode == 1)
+		{
+			$cur_vol = $this->volume;
+		}
+		else
+		{
+			$cur_vol = $newVol + 1;
+		}
+		
+		while($cur_vol != $newVol)
+		{
+			if($cur_vol > $newVol)
+			{
+				$cur_vol--;
+			}
+			else
+			{
+				$cur_vol++;
+			}
+			// If we're not compatible with SETVOL, we'll try adjusting using VOLUME
+			if ( $this->_checkCompatibility(MPD_CMD_SETVOL) ) {
+				$ret = $this->SendCommand(MPD_CMD_SETVOL,$cur_vol);
+				//if ( ! is_null($ret = $this->SendCommand(MPD_CMD_SETVOL,$cur_vol))) $this->volume = $newVol;
+			} else {
+				$this->RefreshInfo();     // Get the latest volume
+				if ( is_null($this->volume) ) {
+					return NULL;
+				} else {
+					$modifier = ( $cur_vol - $this->volume );
+					$ret = $this->SendCommand(MPD_CMD_VOLUME,$modifier);
+					//if ( ! is_null($ret = $this->SendCommand(MPD_CMD_VOLUME,$modifier))) $this->volume = $newVol;
+				}
+			}
+		usleep(6000);
+		}
+		//$this->volume = $newVol;
 		if ( $this->debugging ) echo "mpd->SetVolume() / return\n";
 		return $ret;
 	}
@@ -516,8 +541,14 @@ class mpd {
 	 */
 	function Play() {
 		if ( $this->debugging ) echo "mpd->Play()\n";
+		$this->RefreshInfo();
+		$cur_vol =  $this->volume;
+		$this->SetVolume(0,0);
 		if ( ! is_null($rpt = $this->SendCommand(MPD_CMD_PLAY) )) $this->RefreshInfo();
 		if ( $this->debugging ) echo "mpd->Play() / return\n";
+		
+		usleep(550000);
+		$this->SetVolume($cur_vol);
 		return $rpt;
 	}
 
@@ -527,7 +558,11 @@ class mpd {
 	 */
 	function Stop() {
 		if ( $this->debugging ) echo "mpd->Stop()\n";
+		$this->RefreshInfo();
+		$cur_vol =  $this->volume;
+		$this->SetVolume(0);
 		if ( ! is_null($rpt = $this->SendCommand(MPD_CMD_STOP) )) $this->RefreshInfo();
+		$this->SetVolume($cur_vol,0);
 		if ( $this->debugging ) echo "mpd->Stop() / return\n";
 		return $rpt;
 	}

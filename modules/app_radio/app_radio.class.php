@@ -221,13 +221,13 @@ class app_radio extends module
     }
 
     function control($state){
-        $log = getLogger($this);
-        $log->error('control');
+       // $log = getLogger($this);
+       // $log->error('control');
 
         $out = array();
         global $cmd;
         $cmd = $state;
-        echo('control->'.$cmd);
+        //echo('control->'.$cmd);
         if($cmd=='play'){
             $last_stationID = getGlobal('RadioSetting.LastStationID');
             $res = SQLSelect("SELECT stations FROM app_radio WHERE ID=$last_stationID");

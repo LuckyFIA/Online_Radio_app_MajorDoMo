@@ -24,4 +24,5 @@ if($mpd->connected) {
 } else {
 	echo "Error: " .$mpd->errStr;
 }
+if($mpd->errStr !="") DebMes($mpd->errStr);
 ?>
