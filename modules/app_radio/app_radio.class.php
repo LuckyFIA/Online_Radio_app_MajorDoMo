@@ -242,7 +242,7 @@ class app_radio extends module
                     $out['PLAY'] = 'http://pub4.di.fm:80/di_classiceurodance';
                 }
             }
-        } 
+        }
         $this->select_player($out);
     }
 
@@ -282,7 +282,17 @@ class app_radio extends module
         } elseif ($terminal['PLAYER_TYPE'] == 'mpd') {
             include(DIR_MODULES . 'app_radio/player/mpd.php');
         }
-        curl_close($ch);
+		curl_close($ch);
+		if($cmd=='play'){
+			sg('RadioSetting.On',1);
+        }
+		else if($cmd=='stop'){
+			sg('RadioSetting.On',0);
+		}
+		else if($cmd=='vol')
+		{
+			sg('RadioSetting.VolumeLevel', $volume);
+		}
     }
 
     function view_stations(&$out)
@@ -379,7 +389,17 @@ class app_radio extends module
     {
         $className = 'Radio';
         $objectName = 'RadioSetting';
-        $propertis = array('LastStationID', 'VolumeLevel', 'PlayTerminal');
+		$metodName = 'Control';
+        $propertis = array('LastStationID', 'VolumeLevel', 'PlayTerminal', 'On');
+		$code = 'include_once(DIR_MODULES.\'app_radio/app_radio.class.php\');
+$app_radio=new app_radio();
+if(strpos($params, "vol")===0)
+{
+	global $volume;
+	$volume = (int)substr($params,3);
+	$params= "vol";
+}
+$app_radio->control($params);';
 
         $rec = SQLSelectOne("SELECT ID FROM classes WHERE TITLE LIKE '" . DBSafe($className) . "'");
         if (!$rec['ID']) {
@@ -399,7 +419,23 @@ class app_radio extends module
             $obj_rec['DESCRIPTION'] = 'Настройки';
             $obj_rec['ID'] = SQLInsert('objects', $obj_rec);
         }
-
+				
+		$metod_rec = SQLSelectOne("SELECT ID FROM methods WHERE OBJECT_ID='" . $obj_rec['ID'] . "' AND TITLE LIKE '" . DBSafe($metodName) . "'");
+		if (!$metod_rec['ID']) {
+			$metod_rec = array();
+			$metod_rec['OBJECT_ID'] = $obj_rec['ID'];
+			$metod_rec['CLASS_ID'] = 0;
+			$metod_rec['TITLE'] = $metodName;
+			$metod_rec['DESCRIPTION'] = '';
+			$metod_rec['CODE'] = $code;
+			$metod_rec['ID'] = SQLInsert('methods', $metod_rec);
+		}
+		else
+		{
+			$metod_rec['CODE'] = $code;
+			SQLUpdate('methods', $metod_rec);
+		}
+		
         for ($i = 0; $i < count($propertis); $i++) {
             $prop_rec = SQLSelectOne("SELECT ID FROM properties WHERE OBJECT_ID='" . $obj_rec['ID'] . "' AND TITLE LIKE '" . DBSafe($propertis[$i]) . "'");
             if (!$prop_rec['ID']) {
@@ -411,7 +447,12 @@ class app_radio extends module
         }
         parent::install($parent_name);
     }
-
+	
+	function uninstall() 
+	{
+		SQLExec("drop table if exists app_radio");
+	}
+	
     function dbInstall($data)
     {
 
