@@ -6,7 +6,7 @@
  * module for MajorDoMo project
  * @author Fedorov Ivan <4fedorov@gmail.com>
  * @copyright Fedorov I.A.
- * @version 1.0 January 2014
+ * @version 1.1 May 2014
  */
 class app_radio extends module
 {
@@ -242,9 +242,7 @@ class app_radio extends module
                     $out['PLAY'] = 'http://pub4.di.fm:80/di_classiceurodance';
                 }
             }
-        } else {
-            $cmd = 'stop';
-        }
+        } 
         $this->select_player($out);
     }
 
@@ -419,8 +417,8 @@ class app_radio extends module
 
 $data = <<<EOD
  app_radio: ID int(10) unsigned NOT NULL auto_increment
- app_radio: stations text
- app_radio: name text
+ app_radio: stations text 
+ app_radio: name text 
 EOD;
         parent::dbInstall($data);
     }
