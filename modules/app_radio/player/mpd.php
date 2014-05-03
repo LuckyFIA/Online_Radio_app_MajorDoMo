@@ -1,6 +1,6 @@
 <?php
 
-include 'mpd.class.php';
+include_once(DIR_MODULES.'app_radio/player/mpd.class.php');
 
 if($terminal['PLAYER_PASSWORD']==''){
 	$terminal['PLAYER_PASSWORD'] = NULL;

@@ -6,7 +6,7 @@
  * module for MajorDoMo project
  * @author Fedorov Ivan <4fedorov@gmail.com>
  * @copyright Fedorov I.A.
- * @version 1.1 May 2014
+ * @version 1.2 May 2014
  */
 class app_radio extends module
 {
@@ -128,7 +128,8 @@ class app_radio extends module
         }
         if ($this->data_source == 'app_radio' || $this->data_source == '') {
 
-            global $select_terminal;
+            $out['VER'] = '1.2';
+			global $select_terminal;
             if ($select_terminal != '')
                 setGlobal('RadioSetting.PlayTerminal', $select_terminal);
             $out['PLAY_TERMINAL'] = getGlobal('RadioSetting.PlayTerminal');
@@ -220,6 +221,35 @@ class app_radio extends module
         }
     }
 
+function change_station($val)
+{
+	$res = SQLSelect("SELECT ID FROM app_radio WHERE name='$val'");
+	if ($res[0]['ID']) {
+		sg('RadioSetting.LastStationID',$res[0]['ID']);
+		$this->control('st_change');
+	} 
+	else
+	{
+		$res = SQLSelect("SELECT ID FROM app_radio WHERE ID='$val'");
+		if ($res[0]['ID']) {
+			sg('RadioSetting.LastStationID',$res[0]['ID']);
+			$this->control('st_change');
+		}
+		else
+		{
+			$log = getLogger($this);
+			$log->error('Станции '.$val.' не найдено!');
+		}
+	}
+}
+
+function set_volume($vol)
+{
+	global $volume;
+	$volume = $vol;
+	$this->control('vol');
+}
+	
     function control($state){
        // $log = getLogger($this);
        // $log->error('control');
@@ -228,6 +258,10 @@ class app_radio extends module
         global $cmd;
         $cmd = $state;
         //echo('control->'.$cmd);
+		if($cmd=='st_change'){
+			if(gg('RadioSetting.On'))
+				$cmd = 'play';
+		}
         if($cmd=='play'){
             $last_stationID = getGlobal('RadioSetting.LastStationID');
             $res = SQLSelect("SELECT stations FROM app_radio WHERE ID=$last_stationID");
@@ -243,6 +277,7 @@ class app_radio extends module
                 }
             }
         }
+		
         $this->select_player($out);
     }
 
@@ -393,13 +428,19 @@ class app_radio extends module
         $propertis = array('LastStationID', 'VolumeLevel', 'PlayTerminal', 'On');
 		$code = 'include_once(DIR_MODULES.\'app_radio/app_radio.class.php\');
 $app_radio=new app_radio();
-if(strpos($params, "vol")===0)
+
+if(is_array($params))
 {
-	global $volume;
-	$volume = (int)substr($params,3);
-	$params= "vol";
+	if(isset($params[\'sta\'])) $app_radio->change_station($params[\'sta\'],$app_radio);
+	if(isset($params[\'cmd\'])) $app_radio->control($params[\'cmd\']);
+	if(isset($params[\'vol\'])) $app_radio->set_volume($params[\'vol\'],$app_radio);
 }
-$app_radio->control($params);';
+else
+{
+	if($params==\'play\' || $params==\'stop\')  $app_radio->control($params);
+	else if(strpos($params, "vol")===0) $app_radio->set_volume((int)substr($params,3),$app_radio);
+	else if(strpos($params, "sta:")===0) $app_radio->change_station(substr($params,4),$app_radio);
+}';
 
         $rec = SQLSelectOne("SELECT ID FROM classes WHERE TITLE LIKE '" . DBSafe($className) . "'");
         if (!$rec['ID']) {
