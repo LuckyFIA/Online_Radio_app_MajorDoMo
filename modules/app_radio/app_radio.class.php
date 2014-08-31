@@ -6,7 +6,7 @@
  * module for MajorDoMo project
  * @author Fedorov Ivan <4fedorov@gmail.com>
  * @copyright Fedorov I.A.
- * @version 1.2 May 2014
+ * @version 1.3 August 2014
  */
 class app_radio extends module
 {
@@ -128,12 +128,12 @@ class app_radio extends module
         }
         if ($this->data_source == 'app_radio' || $this->data_source == '') {
 
-            $out['VER'] = '1.2';
+            $out['VER'] = '1.3';
 			global $select_terminal;
             if ($select_terminal != '')
                 setGlobal('RadioSetting.PlayTerminal', $select_terminal);
             $out['PLAY_TERMINAL'] = getGlobal('RadioSetting.PlayTerminal');
-            $res = SQLSelect("SELECT NAME FROM terminals WHERE PLAYER_TYPE NOT LIKE 'foobar'");
+            $res = SQLSelect("SELECT NAME FROM terminals");
             if ($res[0]) {
                 $out['LIST_TERMINAL'] = $res;
             }
@@ -193,7 +193,9 @@ class app_radio extends module
                         if ($s_id == $out['RESULT'][$i]['ID']) {
                             $out['PLAY'] = trim($out['RESULT'][$i]['stations']);
                             $last_stationID = $out['RESULT'][$i]['ID'];
+							$LastStationName = $out['RESULT'][$i]['name'];
                             setGlobal('RadioSetting.LastStationID', $last_stationID);
+							sg('RadioSetting.LastStationName',$LastStationName);
                             break;
                         }
                     }
@@ -226,21 +228,14 @@ function change_station($val)
 	$res = SQLSelect("SELECT ID FROM app_radio WHERE name='$val'");
 	if ($res[0]['ID']) {
 		sg('RadioSetting.LastStationID',$res[0]['ID']);
+		sg('RadioSetting.LastStationName',$val);
 		$this->control('st_change');
 	} 
 	else
 	{
-		$res = SQLSelect("SELECT ID FROM app_radio WHERE ID='$val'");
-		if ($res[0]['ID']) {
-			sg('RadioSetting.LastStationID',$res[0]['ID']);
-			$this->control('st_change');
-		}
-		else
-		{
-			$log = getLogger($this);
-			$log->error('Станции '.$val.' не найдено!');
-		}
-	}
+		$log = getLogger($this);
+		$log->error('Станции '.$val.' не найдено!');
+	}	
 }
 
 function set_volume($vol)
@@ -286,48 +281,28 @@ function set_volume($vol)
         global $volume;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//-----------
+
         $play_terminal = getGlobal('RadioSetting.PlayTerminal');
         echo $play_terminal;
-        $terminals = SQLSelect("SELECT * FROM terminals WHERE NAME='$play_terminal'");
-        $terminal = $terminals[0];
-        if ($terminal['PLAYER_USERNAME'] && $terminal['PLAYER_PASSWORD']) {
-            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_USERPWD, $terminal['PLAYER_USERNAME'] . ':' . $terminal['PLAYER_PASSWORD']);
-        }
 
-        if (!$terminal['PLAYER_PORT'] && $terminal['PLAYER_TYPE'] == 'foobar') {
-            $terminal['PLAYER_PORT'] = '8888';
-        } elseif (!$terminal['PLAYER_PORT'] && $terminal['PLAYER_TYPE'] == 'xbmc') {
-            $terminal['PLAYER_PORT'] = '8080';
-        } elseif (!$terminal['PLAYER_PORT'] && $terminal['PLAYER_TYPE'] == 'mpd') {
-            $terminal['PLAYER_PORT'] = '6600';
-        } elseif (!$terminal['PLAYER_PORT']) {
-            $terminal['PLAYER_PORT'] = '80';
-        }
+        $url=BASE_URL.ROOTHTML.'popup/app_player.html?ajax=1&play_terminal='.$play_terminal;
 
-        if ($terminal['PLAYER_TYPE'] == 'vlc' || $terminal['PLAYER_TYPE'] == '') {
-            include(DIR_MODULES . 'app_radio/player/vlc.php');
-        } elseif ($terminal['PLAYER_TYPE'] == 'xbmc') {
-            include(DIR_MODULES . 'app_radio/player/xbmc.php');
-        } elseif ($terminal['PLAYER_TYPE'] == 'foobar') {
-            include(DIR_MODULES . 'app_radio/player/foobar.php');
-        } elseif ($terminal['PLAYER_TYPE'] == 'vlcweb') {
-            include(DIR_MODULES . 'app_radio/player/vlcweb.php');
-        } elseif ($terminal['PLAYER_TYPE'] == 'mpd') {
-            include(DIR_MODULES . 'app_radio/player/mpd.php');
+        if($cmd=='play'){
+         sg('RadioSetting.On',1);
+         $url.="&command=refresh&play=".urlencode($out['PLAY']);
         }
-		curl_close($ch);
-		if($cmd=='play'){
-			sg('RadioSetting.On',1);
+         else if($cmd=='stop'){
+         sg('RadioSetting.On',0);
+         $url.="&command=close";
         }
-		else if($cmd=='stop'){
-			sg('RadioSetting.On',0);
-		}
-		else if($cmd=='vol')
-		{
-			sg('RadioSetting.VolumeLevel', $volume);
-		}
+        else if($cmd=='vol')
+        {
+         sg('RadioSetting.VolumeLevel', $volume);
+         $url.="&command=volume&volume=".$volume;
+        }
+        curl_setopt($ch, CURLOPT_URL, $url);
+        $res=curl_exec($ch);
+        curl_close($ch);
     }
 
     function view_stations(&$out)
