@@ -1,15 +1,19 @@
-<form action="?" method="get" name="terminal_change">
-	Проигрывать на терминале: 
-	<select name="select_terminal" onchange="document.terminal_change.submit();">
+<form action="?" method="get" class="form-horizontal" name="terminal_change">
+<div class="form-group">
+	<label for="playTerminal" class="col-sm-4 control-label">Проигрывать на терминале:</label>
+	<div class="col-sm-5">
+		<select name="select_terminal" id="playTerminal" class="form-control" onchange="document.terminal_change.submit();">
             <option value=0>Выберите</option>
 			[#begin LIST_TERMINAL#]
             <option value="[#NAME#]"[#if NAME="<#PLAY_TERMINAL#>"#] selected[#endif#]>[#NAME#]</option>
             [#end LIST_TERMINAL#]
         </select>
+	</div>
+</div>		
 </form>
 <p>
-<a href="?view_mode=edit_stations" class="btn"><i class="icon-plus"></i> Добавить станцию</a>
-<a href="?view_mode=import_stations" class="btn"><i class="icon-file"></i> Импортировать списком</a>
+<a href="?view_mode=edit_stations" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Добавить станцию</a>
+<a href="?view_mode=import_stations" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Импортировать списком</a>
 </p>
 
 <!-- table список станций  -->
@@ -52,10 +56,10 @@
  </td>
  [#if "<#ACTION#>"=="admin"#]
   <td width="1%">
-   <a href="?view_mode=edit_stations&id=[#ID#]"  title="<#LANG_EDIT#>"><i class="icon-pencil"></i></a>
+   <a href="?view_mode=edit_stations&id=[#ID#]"  title="<#LANG_EDIT#>"><span class="glyphicon glyphicon-pencil"></span></a>
   </td> 
   <td width="1%">
-   <a href="?view_mode=delete_stations&id=[#ID#]" onClick="return confirm('<#LANG_ARE_YOU_SURE#>')" title="<#LANG_DELETE#>"><i class="icon-remove"></i></a>
+   <a href="?view_mode=delete_stations&id=[#ID#]" onClick="return confirm('<#LANG_ARE_YOU_SURE#>')" title="<#LANG_DELETE#>"><span class="glyphicon glyphicon-remove"></span></a>
   </td>
  [#endif ACTION#]
 </tr>
@@ -73,6 +77,14 @@
 </td></tr></table>
 
 <p>
+Поддерживаются следующие плееры (Вкладка "Терминалы"):
+<br>
+VLC, XBMC, Foobar2000, VLC over HTTP, MPD.
+<br>
+Регулировка громкости реализована для:
+<br>
+XBMC, VLC over HTTP, MPD.
+<br><br>
 Вызов модуля в меню:
 <br>
 <b>&#091#module name="app_radio" mode="menu"#&#093</b>

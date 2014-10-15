@@ -6,7 +6,7 @@
  * module for MajorDoMo project
  * @author Fedorov Ivan <4fedorov@gmail.com>
  * @copyright Fedorov I.A.
- * @version 1.3 August 2014
+ * @version 1.3.1 October 2014
  */
 class app_radio extends module
 {
@@ -128,7 +128,7 @@ class app_radio extends module
         }
         if ($this->data_source == 'app_radio' || $this->data_source == '') {
 
-            $out['VER'] = '1.3';
+            $out['VER'] = '1.3.1';
 			global $select_terminal;
             if ($select_terminal != '')
                 setGlobal('RadioSetting.PlayTerminal', $select_terminal);

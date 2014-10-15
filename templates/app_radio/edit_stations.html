@@ -3,34 +3,37 @@
 <div class="alert alert-success"><#LANG_STRING_SUCCESS#></div>
 [#endif OK#]
 [#if ERR#]
-<div class="alert alert-error"><#LANG_FILLOUT_REQURED#></div>
+<div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
 [#endif ERR#]
 <fieldset>
+<h2><small>
 [#if ID=""#]
-<legend>Добавление станции</legend>
+Добавление
+[#else ID#]
+Редактирование
 [#endif ID#]
+ станции</small></h2>
 <!-- stations (text) -->
-<div class="control-group">
- <label class="control-label"[#if ERR_stations#] style="color:red;font-weight:bold"[#endif#]>
- Введите название
- </label>
- <div class="controls">
- <textarea name="name" rows=4 cols=60 class="input span6">[#name#]</textarea>
- </div>
- <label class="control-label"[#if ERR_stations#] style="color:red;font-weight:bold"[#endif#]>
- Введите URL
- </label>
- <div class="controls">
- <textarea name="stations" rows=4 cols=60 class="input span6">[#stations#]</textarea>
- </div>
+<div class="form-group">
+	<label class="col-sm-4 control-label" for="name">Название</label>
+	<div class="col-sm-6">
+		<input type="text" name="name" class="form-control  [#if ERR_stations#]alert-danger[#endif#]" value="[#name#]" required="true">
+	</div>
 </div>
-<div class="form-actions">
+<div class="form-group">
+	<label class="col-sm-4 control-label">URL станции</label>
+	<div class="col-sm-6">
+		<input type="text" name="stations" class="form-control  [#if ERR_stations#]alert-danger[#endif#]" value="[#stations#]" required="true">
+	</div>
+</div>
+
+ <div class="form-actions">
  [#if ID!=""#]
  <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
  [#else ID#]
  <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
  [#endif ID#]
- <a href="?" class="btn"><#LANG_CANCEL#></a>
+ <a href="?" class="btn btn-default"><#LANG_CANCEL#></a>
 <input type="hidden" name="id" value="<#ID#>">
 <input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
 <input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
