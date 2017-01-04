@@ -210,6 +210,10 @@ class app_radio extends module
                 if ($volume != '') {
                     setGlobal('RadioSetting.VolumeLevel', $volume);
                 }
+		global $play_terminal;
+		if ($play_terminal != '') {
+		    setGlobal('RadioSetting.PlayTerminal', $play_terminal);
+		}
                 $this->select_player($out);
             }
 
