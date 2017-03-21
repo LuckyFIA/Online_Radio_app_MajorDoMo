@@ -33,7 +33,7 @@ class app_radio extends module
      *
      * @access public
      */
-    function saveParams()
+    function saveParams($data = 1)
     {
         $p = array();
         if (IsSet($this->id)) {
