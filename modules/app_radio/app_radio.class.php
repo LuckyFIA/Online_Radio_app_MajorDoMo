@@ -471,6 +471,7 @@ else
 	function uninstall() 
 	{
 		SQLExec("drop table if exists app_radio");
+		parent::uninstall();
 	}
 	
     function dbInstall($data)
