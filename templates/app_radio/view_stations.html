@@ -20,18 +20,18 @@
 
 [#if RESULT#]
 
-<table  align=center class="table table-condensed">
+<table align="center" class="table table-condensed">
 <tbody>
 
 <tr>
- <td height=1 align=center>
-   ID 
+ <td width="50" height="1" align="center">
+   <b>ID</b>
  </td>
- <td height=10 align=center>
-   Название 
+ <td height="10" align="center">
+   <b>Название</b>
  </td>
- <td align=center>
-   URL станции
+ <td align="center">
+   <b>URL станции</b>
  </td>
  [#if "<#ACTION#>"=="admin"#]
   <td width="1%">
@@ -45,13 +45,13 @@
 
 [#begin RESULT#]
 <tr>
- <td height=1 align=center>
-   [#ID#] 
+ <td height="1" align="left">
+   [#ID#].
  </td>
- <td height=10 align=center>
+ <td height="10" align="left">
    [#name#] 
  </td>
- <td align=center>
+ <td align="left">
    [#stations#]
  </td>
  [#if "<#ACTION#>"=="admin"#]
