@@ -313,7 +313,7 @@ function set_volume($vol)
     {
         //require(DIR_MODULES.$this->name.'/view_stations.php');
         $table_name = 'app_radio';
-        $res = SQLSelect("SELECT * FROM $table_name");
+        $res = SQLSelect("SELECT * FROM $table_name ORDER BY name");
         if ($res[0][ID]) {
             $out['RESULT'] = $res;
         }
