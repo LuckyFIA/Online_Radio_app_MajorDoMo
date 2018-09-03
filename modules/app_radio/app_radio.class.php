@@ -151,6 +151,9 @@ class app_radio extends module
             if ($this->view_mode == 'import_stations') {
                 $this->import_stations($out);
             }
+            if ($this->view_mode == 'export_stations') {
+                $this->export_stations($out);
+            }
         }
     }
     /**
@@ -384,6 +387,17 @@ class app_radio extends module
             }
         }
     }
+	
+	function export_stations(&$out) {
+		$data = '';
+		$res = SQLSelect('SELECT `stations`, `name` FROM `app_radio` ORDER BY `name`');
+		foreach($res as $item) {
+			$data .= $item['name'].';'.$item['stations'].PHP_EOL;
+		}
+		header('Content-Disposition: attachment; filename=app_radio_export_'.date('d-m-Y_h-i-s').'.txt');
+		header('Content-Type: text/plain');
+		die($data);
+	}
 
     function delete_stations($id)
     {
