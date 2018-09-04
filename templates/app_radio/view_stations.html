@@ -13,7 +13,8 @@
 </form>
 <p>
 <a href="?view_mode=edit_stations" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Добавить станцию</a>
-<a href="?view_mode=import_stations" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Импортировать списком</a>
+<a href="?view_mode=import_stations" class="btn btn-default"><span class="glyphicon glyphicon-import"></span> Импортировать станции</a>
+<a href="?view_mode=export_stations" class="btn btn-default"><span class="glyphicon glyphicon-export"></span> Экспортировать станции</a>
 </p>
 
 <!-- table список станций  -->
@@ -91,23 +92,23 @@ XBMC, VLC over HTTP, MPD.
 <br><br>
 Использование в сценариях/методах:
 <br>
-<b>cm('RadioSetting.Control','play');</b> или <b>cm('RadioSetting.Control',array('cmd'=>'play');</b> - проигрывание последней радиостанции.
+<b>cm('RadioSetting.Control', array('play'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'play'));</b> - проигрывание последней радиостанции.
 <br>
-<b>cm('RadioSetting.Control','stop');</b> или <b>cm('RadioSetting.Control',array('cmd'=>'stop');</b> - останавливает проигрывание.
+<b>cm('RadioSetting.Control', array('stop'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'stop'));</b> - останавливает проигрывание.
 <br>
-<b>cm('RadioSetting.Control','vol34');</b> или <b>cm('RadioSetting.Control',array('vol'=>34);</b> - устанавливает громкость на 34% (0-100).
+<b>cm('RadioSetting.Control', array('vol34'));</b> или <b>cm('RadioSetting.Control', array('vol'=>34));</b> - устанавливает громкость на 34% (0-100).
 <br>
-<b>cm('RadioSetting.Control','sta:val');</b> или <b>cm('RadioSetting.Control',array('sta'=>'val');</b> - переключает станцию на <b>val</b>, где <b>val</b> ID или название станции.
-<br>
+<b>cm('RadioSetting.Control', array('sta:val'));</b> или <b>cm('RadioSetting.Control', array('sta'=>'val'));</b> - переключает станцию на <b>val</b>, где <b>val</b> ID или название станции.
+<br><br>
 Соответственно:<br>
-<b>cm('RadioSetting.Control',array('sta'=>'Зайцев.FM','cmd'=>'play','vol'=>30));</b> 
+<b>cm('RadioSetting.Control', array('sta'=>'Зайцев.FM', 'cmd'=>'play', 'vol'=>30));</b>
 <br>или
 <br>
-<b>cm('RadioSetting.Control','sta:Зайцев.FM');</b>
+<b>cm('RadioSetting.Control', array('sta:Зайцев.FM'));</b>
 <br>
-<b>cm('RadioSetting.Control','play');</b>
+<b>cm('RadioSetting.Control', array('play'));</b>
 <br>
-<b>cm('RadioSetting.Control','vol30');</b>
+<b>cm('RadioSetting.Control', array('vol30'));</b>
 <br>
 перключить станцию на "Зайцев.FM"; если радио выключено, то включить; и установить громкость на 30%.
 </p>

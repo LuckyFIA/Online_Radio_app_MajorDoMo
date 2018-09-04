@@ -151,6 +151,9 @@ class app_radio extends module
             if ($this->view_mode == 'import_stations') {
                 $this->import_stations($out);
             }
+            if ($this->view_mode == 'export_stations') {
+                $this->export_stations($out);
+            }
         }
     }
     /**
@@ -227,58 +230,57 @@ class app_radio extends module
         }
     }
 
-function change_station($val)
-{
-	$res = SQLSelect("SELECT ID FROM app_radio WHERE name='$val'");
-	if ($res[0]['ID']) {
-		sg('RadioSetting.LastStationID',$res[0]['ID']);
-		sg('RadioSetting.LastStationName',$val);
-		$this->control('st_change');
-	} 
-	else
+	function change_station($val)
 	{
-		$log = getLogger($this);
-		$log->error('Станции '.$val.' не найдено!');
-	}	
-}
+		$res = SQLSelect("SELECT ID FROM app_radio WHERE name='$val'");
+		if ($res[0]['ID']) {
+			sg('RadioSetting.LastStationID',$res[0]['ID']);
+			sg('RadioSetting.LastStationName',$val);
+			$this->control('st_change');
+		} 
+		else
+		{
+			$log = getLogger($this);
+			$log->error('Станции '.$val.' не найдено!');
+		}	
+	}
 
-function set_volume($vol)
-{
-	global $volume;
-	$volume = $vol;
-	$this->control('vol');
-}
+	function set_volume($vol)
+	{
+		global $volume;
+		$volume = $vol;
+		$this->control('vol');
+	}
 	
-    function control($state){
-       // $log = getLogger($this);
-       // $log->error('control');
+	function control($state) {
+		// $log = getLogger($this);
+		// $log->error('control');
 
-        $out = array();
-        global $cmd;
-        $cmd = $state;
-        //echo('control->'.$cmd);
-		if($cmd=='st_change'){
+		$out = array();
+		global $cmd;
+		$cmd = $state;
+		//echo('control->'.$cmd);
+		if($cmd == 'st_change') {
 			if(gg('RadioSetting.On'))
 				$cmd = 'play';
 		}
-        if($cmd=='play'){
-            $last_stationID = getGlobal('RadioSetting.LastStationID');
-            $res = SQLSelect("SELECT stations FROM app_radio WHERE ID=$last_stationID");
-            if ($res[0][stations]) {
-                $out['PLAY'] = $res[0][stations];
-            } else {
-                $res = SQLSelect("SELECT stations FROM app_radio");
-                if ($res[0][stations]) {
-                    $out['PLAY'] = $res[0][stations];
-                } else {
-                    say('Станций не найдено');
-                    $out['PLAY'] = 'http://pub4.di.fm:80/di_classiceurodance';
-                }
-            }
-        }
-		
-        $this->select_player($out);
-    }
+		if($cmd == 'play') {
+			$last_stationID = getGlobal('RadioSetting.LastStationID');
+			$res = SQLSelect('SELECT `stations` FROM `app_radio` WHERE `ID` = '.intval($last_stationID));
+			if($res[0]['stations']) {
+				$out['PLAY'] = $res[0]['stations'];
+			} else {
+				$res = SQLSelect('SELECT `stations` FROM `app_radio`');
+				if($res[0]['stations']) {
+					$out['PLAY'] = $res[0]['stations'];
+				} else {
+					say('Станций не найдено');
+					$out['PLAY'] = 'http://listen.shoutcast.com/europarussia';
+				}
+			}
+		}
+		$this->select_player($out);
+	}
 
     function select_player(&$out){
         global $cmd;
@@ -314,7 +316,7 @@ function set_volume($vol)
         //require(DIR_MODULES.$this->name.'/view_stations.php');
         $table_name = 'app_radio';
         $res = SQLSelect("SELECT * FROM $table_name ORDER BY name");
-        if ($res[0][ID]) {
+        if ($res[0]['ID']) {
             $out['RESULT'] = $res;
         }
     }
@@ -385,6 +387,17 @@ function set_volume($vol)
             }
         }
     }
+	
+	function export_stations(&$out) {
+		$data = '';
+		$res = SQLSelect('SELECT `stations`, `name` FROM `app_radio` ORDER BY `name`');
+		foreach($res as $item) {
+			$data .= $item['name'].';'.$item['stations'].PHP_EOL;
+		}
+		header('Content-Disposition: attachment; filename=app_radio_export_'.date('d-m-Y_H-i-s').'.txt');
+		header('Content-Type: text/plain');
+		die($data);
+	}
 
     function delete_stations($id)
     {
@@ -404,67 +417,59 @@ function set_volume($vol)
         $className = 'Radio';
         $objectName = 'RadioSetting';
 		$metodName = 'Control';
-        $propertis = array('LastStationID', 'VolumeLevel', 'PlayTerminal', 'On');
+        $properties = array('LastStationID', 'VolumeLevel', 'PlayTerminal', 'On');
 		$code = 'include_once(DIR_MODULES.\'app_radio/app_radio.class.php\');
-$app_radio=new app_radio();
+$app_radio = new app_radio();
 
-if(is_array($params))
-{
-	if(isset($params[\'sta\'])) $app_radio->change_station($params[\'sta\'],$app_radio);
-	if(isset($params[\'cmd\'])) $app_radio->control($params[\'cmd\']);
-	if(isset($params[\'vol\'])) $app_radio->set_volume($params[\'vol\'],$app_radio);
-}
-else
-{
-	if($params==\'play\' || $params==\'stop\')  $app_radio->control($params);
-	else if(strpos($params, "vol")===0) $app_radio->set_volume((int)substr($params,3),$app_radio);
-	else if(strpos($params, "sta:")===0) $app_radio->change_station(substr($params,4),$app_radio);
+if(is_array($params)) {
+    foreach($params as $key=>$value) {
+        switch((string)$key) {
+            case \'sta\': $app_radio->change_station($params[\'sta\'], $app_radio); break;
+            case \'cmd\': $app_radio->control($params[\'cmd\']); break;
+            case \'vol\': $app_radio->set_volume($params[\'vol\'], $app_radio); break;
+            default:
+                if($value == \'play\' || $value == \'stop\') $app_radio->control($value);
+                elseif(strpos($value, \'vol\') === 0) $app_radio->set_volume((int)substr($value, 3), $app_radio);
+                elseif(strpos($value, \'sta:\') === 0) $app_radio->change_station(substr($value, 4), $app_radio);
+        }
+    }
 }';
 
-        $rec = SQLSelectOne("SELECT ID FROM classes WHERE TITLE LIKE '" . DBSafe($className) . "'");
-        if (!$rec['ID']) {
-            $rec = array();
-            $rec['TITLE'] = $className;
-            //$rec['PARENT_LIST']='0';
-            $rec['DESCRIPTION'] = 'Онлайн радио';
-            $rec['ID'] = SQLInsert('classes', $rec);
-
-        }
-
-        $obj_rec = SQLSelectOne("SELECT ID FROM objects WHERE CLASS_ID='" . $rec['ID'] . "' AND TITLE LIKE '" . DBSafe($objectName) . "'");
-        if (!$obj_rec['ID']) {
-            $obj_rec = array();
-            $obj_rec['CLASS_ID'] = $rec['ID'];
-            $obj_rec['TITLE'] = $objectName;
-            $obj_rec['DESCRIPTION'] = 'Настройки';
-            $obj_rec['ID'] = SQLInsert('objects', $obj_rec);
-        }
-				
-		$metod_rec = SQLSelectOne("SELECT ID FROM methods WHERE OBJECT_ID='" . $obj_rec['ID'] . "' AND TITLE LIKE '" . DBSafe($metodName) . "'");
-		if (!$metod_rec['ID']) {
-			$metod_rec = array();
-			$metod_rec['OBJECT_ID'] = $obj_rec['ID'];
-			$metod_rec['CLASS_ID'] = 0;
-			$metod_rec['TITLE'] = $metodName;
-			$metod_rec['DESCRIPTION'] = '';
-			$metod_rec['CODE'] = $code;
-			$metod_rec['ID'] = SQLInsert('methods', $metod_rec);
-		}
-		else
-		{
-			$metod_rec['CODE'] = $code;
-			SQLUpdate('methods', $metod_rec);
+		// Class
+		$class_id = addClass($className);
+		if($class_id) {
+			$class = SQLSelectOne('SELECT * FROM `classes` WHERE `ID` = '.$class_id);
+			$class['DESCRIPTION'] = 'Онлайн радио';
+			SQLUpdate('classes', $class);
 		}
 		
-        for ($i = 0; $i < count($propertis); $i++) {
-            $prop_rec = SQLSelectOne("SELECT ID FROM properties WHERE OBJECT_ID='" . $obj_rec['ID'] . "' AND TITLE LIKE '" . DBSafe($propertis[$i]) . "'");
-            if (!$prop_rec['ID']) {
-                $prop_rec = array();
-                $prop_rec['TITLE'] = $propertis[$i];
-                $prop_rec['OBJECT_ID'] = $obj_rec['ID'];
-                $prop_rec['ID'] = SQLInsert('properties', $prop_rec);
-            }
-        }
+		// Method
+		$meth_id = addClassMethod($className, $metodName, '');
+
+		// Object
+		$object_id = addClassObject($className, $objectName);
+		if($object_id) {
+			$object = SQLSelectOne('SELECT * FROM `objects` WHERE `ID` = '.$object_id);
+			$object['DESCRIPTION'] = 'Настройки';
+			SQLUpdate('objects', $object);
+		}
+
+		// Properties
+		foreach($properties as $title) {
+			$properti = SQLSelectOne('SELECT `ID` FROM `properties` WHERE `OBJECT_ID` = '.$object_id.' AND `TITLE` LIKE \''.DBSafe($title).'\'');
+			if(!$properti) {
+				$properti = array();
+				$properti['TITLE'] = $title;
+				$properti['OBJECT_ID'] = $object_id;
+				$properti_id = SQLInsert('properties', $properti);
+			}
+		}
+		
+		// Code
+		if($meth_id) {
+			injectObjectMethodCode($objectName.'.'.$metodName, $this->name, $code);
+		}
+
         parent::install($parent_name);
     }
 	
