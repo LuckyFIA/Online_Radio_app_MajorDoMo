@@ -394,7 +394,7 @@ class app_radio extends module
 		foreach($res as $item) {
 			$data .= $item['name'].';'.$item['stations'].PHP_EOL;
 		}
-		header('Content-Disposition: attachment; filename=app_radio_export_'.date('d-m-Y_h-i-s').'.txt');
+		header('Content-Disposition: attachment; filename=app_radio_export_'.date('d-m-Y_H-i-s').'.txt');
 		header('Content-Type: text/plain');
 		die($data);
 	}
