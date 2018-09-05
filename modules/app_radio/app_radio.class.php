@@ -316,8 +316,11 @@ class app_radio extends module
         //require(DIR_MODULES.$this->name.'/view_stations.php');
         $table_name = 'app_radio';
         $res = SQLSelect("SELECT * FROM $table_name ORDER BY name");
-        if ($res[0]['ID']) {
+        if($res[0]['ID']) {
             $out['RESULT'] = $res;
+			for($i = 0 ; $i < count($out['RESULT']) ; $i++) {
+				$out['RESULT'][$i]['position'] = $i + 1;
+			}
         }
     }
 
