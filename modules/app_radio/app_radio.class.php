@@ -295,16 +295,16 @@ class app_radio extends module
 
         if($cmd=='play'){
          sg('RadioSetting.On',1);
-         $url.="&command=refresh&play=".urlencode($out['PLAY']);
+         $url.="&command=play&param=".urlencode($out['PLAY']);
         }
          else if($cmd=='stop'){
          sg('RadioSetting.On',0);
-         $url.="&command=close";
+         $url.="&command=stop";
         }
         else if($cmd=='vol')
         {
          sg('RadioSetting.VolumeLevel', $volume);
-         $url.="&command=volume&volume=".$volume;
+         $url.="&command=set_volume&param=".$volume;
         }
         curl_setopt($ch, CURLOPT_URL, $url);
         $res=curl_exec($ch);
