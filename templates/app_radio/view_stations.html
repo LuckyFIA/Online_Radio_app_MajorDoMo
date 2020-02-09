@@ -9,7 +9,7 @@
             [#end LIST_TERMINAL#]
         </select>
 	</div>
-</div>		
+</div>
 </form>
 <p>
 <a href="?view_mode=edit_stations" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Добавить станцию</a>
@@ -36,10 +36,10 @@
  </td>
  [#if "<#ACTION#>"=="admin"#]
   <td width="1%">
-    
-  </td> 
+
+  </td>
   <td width="1%">
-    
+
   </td>
  [#endif ACTION#]
 </tr>
@@ -50,7 +50,7 @@
    [#ID#]
  </td>
  <td height="10" align="left">
-   [#name#] 
+   [#name#]
  </td>
  <td align="left">
    [#stations#]
@@ -58,7 +58,7 @@
  [#if "<#ACTION#>"=="admin"#]
   <td width="1%">
    <a href="?view_mode=edit_stations&id=[#ID#]"  title="<#LANG_EDIT#>"><span class="glyphicon glyphicon-pencil"></span></a>
-  </td> 
+  </td>
   <td width="1%">
    <a href="?view_mode=delete_stations&id=[#ID#]" onClick="return confirm('<#LANG_ARE_YOU_SURE#>')" title="<#LANG_DELETE#>"><span class="glyphicon glyphicon-remove"></span></a>
   </td>
