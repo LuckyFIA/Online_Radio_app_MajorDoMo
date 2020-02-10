@@ -5,20 +5,20 @@
 [#endif ERR#]
 <fieldset>
 
-<h2><small>Импорт списка станций</small></h2>
+<h2><small><#LANG_IMPORT_STATION_LIST#></small></h2>
 [#if TOTAL#]
 <div class="alert alert-success"><#LANG_STRING_SUCCESS#></div>
-<div class="alert alert-success">Всего импортировано: [#TOTAL#]</div>
+<div class="alert alert-success"><#LANG_TOTAL_IMPORTED#>: [#TOTAL#]</div>
 [#endif TOTAL#]
 
 <div class="form-group">
-	<label for="inputFile">Фаил со списком:</label>
+	<label for="inputFile"><#LANG_LIST_FILE#>:</label>
 	<div >
 	<input type="file" name="file" id="inputFile" class="[#if ERR#]alert-danger[#endif#]">
 	</div>
-	<span class="help-block">Формат файла (TXT, unicode. Название станции;URL станции <= каждая запись с новой строки):<br>Зайцев.FM;http://radio.zaycev.fm:9002/ZaycevFM(128)<br>Di.FM;http://pub4.di.fm:80/di_classiceurodance</span>
+	<span class="help-block"><#LANG_FILE_FORMAT#>:<br>Зайцев.FM;http://radio.zaycev.fm:9002/ZaycevFM(128)<br>Di.FM;http://pub4.di.fm:80/di_classiceurodance</span>
 </div>
-  
+
 <div class="form-group">
  <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
  <a href="?" class="btn btn-default"><#LANG_CANCEL#></a>

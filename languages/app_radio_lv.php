@@ -33,9 +33,11 @@ $dictionary = array(
 'MODULE_DISCUSSION'=>'Diskusijas par moduli',
 'HERE'=>'Šeit',
 'MODULE_PLAYING_ONLINE_RADIO'=>'Modulis paredzēts lai atskaņotu interneta rādio',
-'STATION'=> 'Raidstaciju'
-
-
+'STATION'=> 'Raidstaciju',
+'IMPORT_STATION_LIST'=>'Importēt raidstaciju sarakstu',
+'TOTAL_IMPORTED'=>'Kopā importēts',
+'LIST_FILE'=>'Fails ar sarakstu',
+'FILE_FORMAT'=>'Faila formāts (TXT, UNICODE. Raidstacijas nosaukums;Raidstacijas URL <= Katrs nākamais ieraksts jaunā rindā )'
 
 
 
