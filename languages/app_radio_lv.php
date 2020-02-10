@@ -9,7 +9,7 @@ $dictionary = array(
 'STATION_NAME'=>'Nosaukums',
 'STATION_URL'=>'Raidstacijas URL',
 'ADD_STATION'=>'Pievienot raidstaciju',
-'DEL_STATION'=>'Dzēst Raistaciju',
+'DEL_STATION'=>'Dzēst raidstaciju',
 'IMPORT_STATION'=>'Importēt raidstaciju',
 'EXPORT_STATION'=>'Eksportēt raidstaciju',
 'SELECT_STATION'=>'Izvēlaties',
@@ -19,7 +19,19 @@ $dictionary = array(
 'PLAYERS_SUPORTED'=>'Atbalsta šadus atskaņotājus (Ivēlnē Temināļi)',
 'CAL_IN_MENU'=>'Kā izmantot Vadības izvēlnē',
 'USE_SCRIPT'=>'Kā izmantot scenārijos/metotēs',
-'RESPECTIVELY'=>'Atiecīgi'
+'RESPECTIVELY'=>'Atiecīgi',
+'VOLUME_CONTROL_IMPLEMENTED'=>'Skaļuma kontrole ir realizēta',
+'LAST_STATION'=>'atskaņot pēdējo raidstaciju',
+'STOP_PLAY'=>'apturēt atskaņošanu',
+'SET_VOLUME'=>'iestata atskaņoša skaļumu uz',
+'SET_STATION_VAL'=>'pārslēdz raidstaciju uz',
+'WHERE'=>'kur',
+'OR_STATION_NAME'=>'vai raidstacijas nosaukums',
+'OR'=>'vai',
+'ZAICEV_FM'=>'pārslēdz raidstaciju uz "Зайцев.FM", Ja rādio izslēgts, tad ieslēdz; un iestata skaļumu uz 30%.'
+
+
+
 
 
 

@@ -82,7 +82,7 @@
 <br>
 VLC, XBMC, Foobar2000, VLC over HTTP, MPD.
 <br>
-Регулировка громкости реализована для:
+ <#LANG_VOLUME_CONTROL_IMPLEMENTED#>:
 <br>
 XBMC, VLC over HTTP, MPD.
 <br><br>
@@ -92,17 +92,17 @@ XBMC, VLC over HTTP, MPD.
 <br><br>
 <#LANG_USE_SCRIPT#>:
 <br>
-<b>cm('RadioSetting.Control', array('play'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'play'));</b> - проигрывание последней радиостанции.
+<b>cm('RadioSetting.Control', array('play'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'play'));</b> - <#LANG_LAST_STATION#>.
 <br>
-<b>cm('RadioSetting.Control', array('stop'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'stop'));</b> - останавливает проигрывание.
+<b>cm('RadioSetting.Control', array('stop'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'stop'));</b> - <#LANG_STOP_PLAY#>.
 <br>
-<b>cm('RadioSetting.Control', array('vol34'));</b> или <b>cm('RadioSetting.Control', array('vol'=>34));</b> - устанавливает громкость на 34% (0-100).
+<b>cm('RadioSetting.Control', array('vol34'));</b> или <b>cm('RadioSetting.Control', array('vol'=>34));</b> - <#LANG_SET_VOLUME#> 34% (0-100).
 <br>
-<b>cm('RadioSetting.Control', array('sta:val'));</b> или <b>cm('RadioSetting.Control', array('sta'=>'val'));</b> - переключает станцию на <b>val</b>, где <b>val</b> ID или название станции.
+<b>cm('RadioSetting.Control', array('sta:val'));</b> или <b>cm('RadioSetting.Control', array('sta'=>'val'));</b> - <#LANG_SET_STATION_VAL#> <b>val</b>, <#LANG_WHERE#> <b>val</b> ID <#LANG_OR_STATION_NAME#>.
 <br><br>
 <#LANG_RESPECTIVELY#>:<br>
 <b>cm('RadioSetting.Control', array('sta'=>'Зайцев.FM', 'cmd'=>'play', 'vol'=>30));</b>
-<br>или
+<br><#LANG_WHERE#>
 <br>
 <b>cm('RadioSetting.Control', array('sta:Зайцев.FM'));</b>
 <br>
@@ -110,5 +110,5 @@ XBMC, VLC over HTTP, MPD.
 <br>
 <b>cm('RadioSetting.Control', array('vol30'));</b>
 <br>
-перключить станцию на "Зайцев.FM"; если радио выключено, то включить; и установить громкость на 30%.
+<#LANG_ZAICEV_FM#>
 </p>
