@@ -8,6 +8,14 @@
  * @copyright Fedorov I.A.
  * @version 1.3.1 October 2014
  */
+ if (file_exists(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php')) {
+     include_once(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php');
+ }
+ if (file_exists(ROOT.'languages/app_radio_default.php')) {
+     include_once(ROOT.'languages/app_radio_default.php');
+ }
+
+
 class app_radio extends module
 {
 
@@ -21,7 +29,7 @@ class app_radio extends module
     function app_radio()
     {
         $this->name = "app_radio";
-        $this->title = "Онлайн радио";
+        $this->title = "<#LANG_APP_NAME#>";
         $this->module_category = "<#LANG_SECTION_APPLICATIONS#>";
         $this->checkInstalled();
     }
@@ -237,12 +245,12 @@ class app_radio extends module
 			sg('RadioSetting.LastStationID',$res[0]['ID']);
 			sg('RadioSetting.LastStationName',$val);
 			$this->control('st_change');
-		} 
+		}
 		else
 		{
 			$log = getLogger($this);
 			$log->error('Станции '.$val.' не найдено!');
-		}	
+		}
 	}
 
 	function set_volume($vol)
@@ -251,7 +259,7 @@ class app_radio extends module
 		$volume = $vol;
 		$this->control('vol');
 	}
-	
+
 	function control($state) {
 		// $log = getLogger($this);
 		// $log->error('control');
@@ -390,7 +398,7 @@ class app_radio extends module
             }
         }
     }
-	
+
 	function export_stations(&$out) {
 		$data = '';
 		$res = SQLSelect('SELECT `stations`, `name` FROM `app_radio` ORDER BY `name`');
@@ -445,7 +453,7 @@ if(is_array($params)) {
 			$class['DESCRIPTION'] = 'Онлайн радио';
 			SQLUpdate('classes', $class);
 		}
-		
+
 		// Method
 		$meth_id = addClassMethod($className, $metodName, '');
 
@@ -467,7 +475,7 @@ if(is_array($params)) {
 				$properti_id = SQLInsert('properties', $properti);
 			}
 		}
-		
+
 		// Code
 		if($meth_id) {
 			injectObjectMethodCode($objectName.'.'.$metodName, $this->name, $code);
@@ -475,20 +483,20 @@ if(is_array($params)) {
 
         parent::install($parent_name);
     }
-	
-	function uninstall() 
+
+	function uninstall()
 	{
 		SQLExec("drop table if exists app_radio");
 		parent::uninstall();
 	}
-	
+
     function dbInstall($data)
     {
 
 $data = <<<EOD
  app_radio: ID int(10) unsigned NOT NULL auto_increment
- app_radio: stations text 
- app_radio: name text 
+ app_radio: stations text
+ app_radio: name text
 EOD;
         parent::dbInstall($data);
     }
