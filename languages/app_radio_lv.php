@@ -14,7 +14,8 @@ $dictionary = array(
 'EXPORT_STATION'=>'Eksportēt raidstaciju',
 'SELECT_STATION'=>'Izvēlaties',
 'PLAY_TERMINAL'=>'Atskaņot terminālī',
-'ABOUT'=>'Par moduli'
+'ABOUT'=>'Par moduli',
+'NO_STATIONS_FOND'=>'Nav atrasta neviena raidstacija'
 
 
 /* end module names */
