@@ -1,4 +1,4 @@
-<big>Онлайн радио</big>
+<big><#LANG_RADIO_NAME#></big>
 <div class="float-right">
 	<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#about">О модуле&nbsp;&nbsp;<span class="glyphicon glyphicon-info-sign icon-white"></span>
 	</button>
@@ -11,11 +11,11 @@
 [#if VIEW_MODE="view_stations" || VIEW_MODE=""#]
 	[#inc view_stations.html#]
 [#endif VIEW_MODE#]
- 
+
 [#if VIEW_MODE="import_stations"#]
 	[#inc import_stations.html#]
 [#endif VIEW_MODE#]
- 
+
 [#if VIEW_MODE="edit_stations"#]
 	[#inc edit_stations.html#]
 [#endif VIEW_MODE#]
@@ -41,7 +41,7 @@
 				</p>
 				<p class="float-left"></p>
 			</div>
-			
+
 			<div class="modal-footer">
 				<div class="pull-left">Best regards!<br>@LuckyFIA :)</div>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
