@@ -15,7 +15,12 @@ $dictionary = array(
 'SELECT_STATION'=>'Izvēlaties',
 'PLAY_TERMINAL'=>'Atskaņot terminālī',
 'ABOUT'=>'Par moduli',
-'NO_STATIONS_FOND'=>'Nav atrasta neviena raidstacija'
+'NO_STATIONS_FOND'=>'Nav atrasta neviena raidstacija',
+'PLAYERS_SUPORTED'=>'Atbalsta šadus atskaņotājus (Ivēlnē Temināļi)',
+'CAL_IN_MENU'=>'Kā izmantot Vadības izvēlnē',
+'USE_SCRIPT'=>'Kā izmantot scenārijos/metotēs',
+'RESPECTIVELY'=>'Atiecīgi'
+
 
 
 /* end module names */
