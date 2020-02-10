@@ -5,7 +5,7 @@
 
 $dictionary = array(
 /* general */
-'RADIO_NAME' =>'Interneta Rādio',
+'APP_NAME' =>'Interneta Rādio',
 'STATION_NAME'=>'Nosaukums',
 'STATION_URL'=>'Raidstacijas URL',
 'ADD_STATION'=>'Pievienot raidstaciju',
