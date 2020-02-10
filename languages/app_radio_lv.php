@@ -5,7 +5,8 @@
 
 $dictionary = array(
 /* general */
-'RADIO_NAME' =>'Interneta Rādio'
+'RADIO_NAME' =>'Interneta Rādio',
+'STATION_NAME'=>'Nosaukums'
 
 
 /* end module names */
