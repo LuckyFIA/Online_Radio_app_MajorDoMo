@@ -28,7 +28,11 @@ $dictionary = array(
 'WHERE'=>'kur',
 'OR_STATION_NAME'=>'vai raidstacijas nosaukums',
 'OR'=>'vai',
-'ZAICEV_FM'=>'pārslēdz raidstaciju uz "Зайцев.FM", Ja rādio izslēgts, tad ieslēdz; un iestata skaļumu uz 30%.'
+'ZAICEV_FM'=>'pārslēdz raidstaciju uz "Зайцев.FM", Ja rādio izslēgts, tad ieslēdz; un iestata skaļumu uz 30%.',
+'SUPORT_AUTHOR'=>'Atbalstiet autoru Materiāli',
+'MODULE_DISCUSSION'=>'Diskusijas par moduli',
+'HERE'=>'Šeit',
+'MODULE_PLAYING_ONLINE_RADIO'=>'Modulis paredzēts lai atskaņotu interneta rādio'
 
 
 
