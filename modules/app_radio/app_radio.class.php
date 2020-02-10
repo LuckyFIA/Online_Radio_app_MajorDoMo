@@ -6,7 +6,11 @@
  * module for MajorDoMo project
  * @author Fedorov Ivan <4fedorov@gmail.com>
  * @copyright Fedorov I.A.
- * @version 1.3.1 October 2014
+ * @version 1.3.2 February 2020
+ */
+ /**
+ * Translate LV EN
+ * @author Guntars Strogonovs <gun4as@gmail.com>
  */
  if (file_exists(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php')) {
      include_once(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php');
