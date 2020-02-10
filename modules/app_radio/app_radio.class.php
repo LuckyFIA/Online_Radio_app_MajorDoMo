@@ -6,11 +6,12 @@
  * module for MajorDoMo project
  * @author Fedorov Ivan <4fedorov@gmail.com>
  * @copyright Fedorov I.A.
- * @version 1.3.2 February 2020
+ * @version 1.3.1 October 2014
  */
  /**
  * Translate LV EN
  * @author Guntars Strogonovs <gun4as@gmail.com>
+ * @version 1.3.2 February 2020
  */
  if (file_exists(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php')) {
      include_once(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php');
@@ -140,7 +141,7 @@ class app_radio extends module
         }
         if ($this->data_source == 'app_radio' || $this->data_source == '') {
 
-            $out['VER'] = '1.3.1';
+            $out['VER'] = '1.3.2';
 			global $select_terminal;
             if ($select_terminal != '')
                 setGlobal('RadioSetting.PlayTerminal', $select_terminal);
