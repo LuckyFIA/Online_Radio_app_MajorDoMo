@@ -13,7 +13,7 @@ $dictionary = array(
 'IMPORT_STATION'=>'Importēt raidstaciju',
 'EXPORT_STATION'=>'Eksportēt raidstaciju',
 'SELECT_STATION'=>'Izvēlaties',
-'PLAY_TERMINAL'=>'Atskaņot terminālī'.
+'PLAY_TERMINAL'=>'Atskaņot terminālī',
 'ABOUT'=>'Par moduli'
 
 
