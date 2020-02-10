@@ -32,7 +32,8 @@ $dictionary = array(
 'SUPORT_AUTHOR'=>'Atbalstiet autoru Materiāli',
 'MODULE_DISCUSSION'=>'Diskusijas par moduli',
 'HERE'=>'Šeit',
-'MODULE_PLAYING_ONLINE_RADIO'=>'Modulis paredzēts lai atskaņotu interneta rādio'
+'MODULE_PLAYING_ONLINE_RADIO'=>'Modulis paredzēts lai atskaņotu interneta rādio',
+'STATION'=> 'Raidstaciju'
 
 
 
