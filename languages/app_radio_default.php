@@ -5,7 +5,7 @@
 
 $dictionary = array(
 /* general */
-'APP_RADIO_NAME' =>'Online Radio',
+'APP_INTERNET_RADIO' =>'Online Radio',
 'STATION_NAME'=>'Name',
 'STATION_URL'=>'Statiom URL',
 'ADD_STATION'=>'ADD station',

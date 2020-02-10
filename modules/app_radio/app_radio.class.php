@@ -34,7 +34,7 @@ class app_radio extends module
     function app_radio()
     {
         $this->name = "app_radio";
-        $this->title = "<#LANG_APP_RADIO_NAME#>";
+        $this->title = "<#LANG_APP_INTERNET_RADIO#>";
         $this->module_category = "<#LANG_SECTION_APPLICATIONS#>";
         $this->checkInstalled();
     }
