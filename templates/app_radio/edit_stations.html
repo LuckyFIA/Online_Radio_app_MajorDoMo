@@ -8,20 +8,20 @@
 <fieldset>
 <h2><small>
 [#if ID=""#]
-Добавление
+<#LANG_ADD#>
 [#else ID#]
-Редактирование
+<#LANG_EDIT#>
 [#endif ID#]
- станции</small></h2>
+ <#LANG_STATION#></small></h2>
 <!-- stations (text) -->
 <div class="form-group">
-	<label class="col-sm-4 control-label" for="name">Название</label>
+	<label class="col-sm-4 control-label" for="name"><#LANG_STATION_NAME#></label>
 	<div class="col-sm-6">
 		<input type="text" name="name" class="form-control  [#if ERR_stations#]alert-danger[#endif#]" value="[#name#]" required="true">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-sm-4 control-label">URL станции</label>
+	<label class="col-sm-4 control-label"><#LANG_STATION_URL#></label>
 	<div class="col-sm-6">
 		<input type="text" name="stations" class="form-control  [#if ERR_stations#]alert-danger[#endif#]" value="[#stations#]" required="true">
 	</div>

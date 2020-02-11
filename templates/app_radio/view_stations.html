@@ -1,20 +1,20 @@
 <form action="?" method="get" class="form-horizontal" name="terminal_change">
 <div class="form-group">
-	<label for="playTerminal" class="col-sm-4 control-label">Проигрывать на терминале:</label>
+	<label for="playTerminal" class="col-sm-4 control-label"><#LANG_PLAY_TERMINAL#>:</label>
 	<div class="col-sm-5">
 		<select name="select_terminal" id="playTerminal" class="form-control" onchange="document.terminal_change.submit();">
-            <option value=0>Выберите</option>
+            <option value=0><#LANG_SELECT_STATION#></option>
 			[#begin LIST_TERMINAL#]
             <option value="[#NAME#]"[#if NAME="<#PLAY_TERMINAL#>"#] selected[#endif#]>[#NAME#]</option>
             [#end LIST_TERMINAL#]
         </select>
 	</div>
-</div>		
+</div>
 </form>
 <p>
-<a href="?view_mode=edit_stations" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Добавить станцию</a>
-<a href="?view_mode=import_stations" class="btn btn-default"><span class="glyphicon glyphicon-import"></span> Импортировать станции</a>
-<a href="?view_mode=export_stations" class="btn btn-default"><span class="glyphicon glyphicon-export"></span> Экспортировать станции</a>
+<a href="?view_mode=edit_stations" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> <#LANG_ADD_STATION#></a>
+<a href="?view_mode=import_stations" class="btn btn-default"><span class="glyphicon glyphicon-import"></span> <#LANG_IMPORT_STATION#></a>
+<a href="?view_mode=export_stations" class="btn btn-default"><span class="glyphicon glyphicon-export"></span> <#LANG_EXPORT_STATION#></a>
 </p>
 
 <!-- table список станций  -->
@@ -29,17 +29,17 @@
    <b>ID</b>
  </td>
  <td height="10" align="center">
-   <b>Название</b>
+   <b><#LANG_STATION_NAME#></b>
  </td>
  <td align="center">
-   <b>URL станции</b>
+   <b><#LANG_STATION_URL#></b>
  </td>
  [#if "<#ACTION#>"=="admin"#]
   <td width="1%">
-    
-  </td> 
+
+  </td>
   <td width="1%">
-    
+
   </td>
  [#endif ACTION#]
 </tr>
@@ -50,7 +50,7 @@
    [#ID#]
  </td>
  <td height="10" align="left">
-   [#name#] 
+   [#name#]
  </td>
  <td align="left">
    [#stations#]
@@ -58,7 +58,7 @@
  [#if "<#ACTION#>"=="admin"#]
   <td width="1%">
    <a href="?view_mode=edit_stations&id=[#ID#]"  title="<#LANG_EDIT#>"><span class="glyphicon glyphicon-pencil"></span></a>
-  </td> 
+  </td>
   <td width="1%">
    <a href="?view_mode=delete_stations&id=[#ID#]" onClick="return confirm('<#LANG_ARE_YOU_SURE#>')" title="<#LANG_DELETE#>"><span class="glyphicon glyphicon-remove"></span></a>
   </td>
@@ -71,38 +71,38 @@
 
 [#else RESULT#]
 <p>
-<font color="red">Станций не найдено</font>
+<font color="red"><#LANG_NO_STATIONS_FOND#></font>
 </p>
 [#endif RESULT#]
 <!-- / results -->
 </td></tr></table>
 
 <p>
-Поддерживаются следующие плееры (Вкладка "Терминалы"):
+<#LANG_PLAYERS_SUPORTED#>:
 <br>
 VLC, XBMC, Foobar2000, VLC over HTTP, MPD.
 <br>
-Регулировка громкости реализована для:
+ <#LANG_VOLUME_CONTROL_IMPLEMENTED#>:
 <br>
 XBMC, VLC over HTTP, MPD.
 <br><br>
-Вызов модуля в меню:
+<#LANG_CAL_IN_MENU#>:
 <br>
 <b>&#091#module name="app_radio" mode="menu"#&#093</b>
 <br><br>
-Использование в сценариях/методах:
+<#LANG_USE_SCRIPT#>:
 <br>
-<b>cm('RadioSetting.Control', array('play'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'play'));</b> - проигрывание последней радиостанции.
+<b>cm('RadioSetting.Control', array('play'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('cmd'=>'play'));</b> - <#LANG_LAST_STATION#>.
 <br>
-<b>cm('RadioSetting.Control', array('stop'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'stop'));</b> - останавливает проигрывание.
+<b>cm('RadioSetting.Control', array('stop'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('cmd'=>'stop'));</b> - <#LANG_STOP_PLAY#>.
 <br>
-<b>cm('RadioSetting.Control', array('vol34'));</b> или <b>cm('RadioSetting.Control', array('vol'=>34));</b> - устанавливает громкость на 34% (0-100).
+<b>cm('RadioSetting.Control', array('vol34'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('vol'=>34));</b> - <#LANG_SET_VOLUME#> 34% (0-100).
 <br>
-<b>cm('RadioSetting.Control', array('sta:val'));</b> или <b>cm('RadioSetting.Control', array('sta'=>'val'));</b> - переключает станцию на <b>val</b>, где <b>val</b> ID или название станции.
+<b>cm('RadioSetting.Control', array('sta:val'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('sta'=>'val'));</b> - <#LANG_SET_STATION_VAL#> <b>val</b>, <#LANG_WHERE#> <b>val</b> ID <#LANG_OR_STATION_NAME#>.
 <br><br>
-Соответственно:<br>
+<#LANG_RESPECTIVELY#>:<br>
 <b>cm('RadioSetting.Control', array('sta'=>'Зайцев.FM', 'cmd'=>'play', 'vol'=>30));</b>
-<br>или
+<br><#LANG_OR#>
 <br>
 <b>cm('RadioSetting.Control', array('sta:Зайцев.FM'));</b>
 <br>
@@ -110,5 +110,5 @@ XBMC, VLC over HTTP, MPD.
 <br>
 <b>cm('RadioSetting.Control', array('vol30'));</b>
 <br>
-перключить станцию на "Зайцев.FM"; если радио выключено, то включить; и установить громкость на 30%.
+<#LANG_ZAICEV_FM#>
 </p>

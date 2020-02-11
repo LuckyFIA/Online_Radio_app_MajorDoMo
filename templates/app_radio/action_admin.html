@@ -1,6 +1,7 @@
-<big>Онлайн радио</big>
+<big><#LANG_APP_INTERNET_RADIO#></big>
+
 <div class="float-right">
-	<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#about">О модуле&nbsp;&nbsp;<span class="glyphicon glyphicon-info-sign icon-white"></span>
+	<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#about"><#LANG_ABOUT#>&nbsp;&nbsp;<span class="glyphicon glyphicon-info-sign icon-white"></span>
 	</button>
 </div>
 
@@ -11,11 +12,11 @@
 [#if VIEW_MODE="view_stations" || VIEW_MODE=""#]
 	[#inc view_stations.html#]
 [#endif VIEW_MODE#]
- 
+
 [#if VIEW_MODE="import_stations"#]
 	[#inc import_stations.html#]
 [#endif VIEW_MODE#]
- 
+
 [#if VIEW_MODE="edit_stations"#]
 	[#inc edit_stations.html#]
 [#endif VIEW_MODE#]
@@ -25,13 +26,13 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<h4 class="modal-title">Онлайн радио ver. [#VER#]</h4>
+				<h4 class="modal-title"><#LANG_APP_INTERNET_RADIO#> ver. [#VER#]</h4>
 			</div>
 			<div class="modal-body">
-				<p> Модуль для проигрывания онлайн-радио.<br>
-				Обсуждение модуля <a href="http://smartliving.ru/forum/viewtopic.php?f=5&t=1402" target="_blank">здесь</a>.<br>
+				<p> <#LANG_MODULE_PLAYING_ONLINE_RADIO#>.<br>
+				<#LANG_MODULE_DISCUSSION#> <a href="http://smartliving.ru/forum/viewtopic.php?f=5&t=1402" target="_blank"><#LANG_HERE#></a>.<br>
 				<hr size="1">
-				Поддержать автора материально:
+				<#LANG_SUPORT_AUTHOR#>:
 				<ul>
 					<li>Yandex: 410011477255886</li>
 					<li>WebMoney: R426095916500</li>
@@ -41,7 +42,7 @@
 				</p>
 				<p class="float-left"></p>
 			</div>
-			
+
 			<div class="modal-footer">
 				<div class="pull-left">Best regards!<br>@LuckyFIA :)</div>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

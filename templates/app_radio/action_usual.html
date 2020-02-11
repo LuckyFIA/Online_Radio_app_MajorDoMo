@@ -5,7 +5,7 @@
 	margin-right:0px;
 	text-shadow:0 1px 0 #000000;
 	height:338px;
-	
+
 	color:#999999;
 }
 
@@ -47,7 +47,7 @@
 
 ul {
 	list-style-type: none;
-	margin: 0; 
+	margin: 0;
 	padding: 0;
 	overflow:auto;
 }
@@ -60,7 +60,7 @@ ul#stations li a{
     display: block;
     padding: 3px 10px;
     white-space: nowrap;
-	text-shadow: 0 0 3px rgba(255, 255, 255, 0.2); 
+	text-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
 	text-decoration: none;
 	height: 20px;
 }
@@ -70,11 +70,11 @@ ul#stations li a:hover{
     border-bottom: 1px solid #222222;
     border-top: 1px solid #777777;
 	height: 20px;
-	color: White; 
+	color: White;
 }
 
 ul#stations li a span{
-	font-size: 12px; 
+	font-size: 12px;
 	padding: 3px 0 0 2px;
 	display: block;
 	font-style: normal;
@@ -115,11 +115,11 @@ function command(cmd,id) {
   return false;
 }
 
-function Volume() {    
+function Volume() {
   if (this.sliderTimeour) clearTimeout(this.sliderTimeour);
   this.sliderTimeour = setTimeout(function(){
     command('vol');
-	
+
 	//alert('Vol');
   },30);
 };
@@ -127,12 +127,12 @@ function Volume() {
 
 <div class="app_radio"  style="border-radius: 8px 8px; [#if MODE!='menu'#] width:275px;[#endif MODE#]">
 	<div class="control" style="border-radius: 0px 0px 0px 0px;">
-		<div class="top">Онлайн Радио</div>
+		<div class="top"><#LANG_APP_INTERNET_RADIO#></div>
 	</div>
 
 	<div class="station">
 		<ul id="stations">
-		[#if RESULT#] 
+		[#if RESULT#]
 
 		[#begin RESULT#]
 			<li><a href="#" id=[#ID#] [#if SELECT#]class=station_select[#endif SELECT#] onClick='command("play",[#ID#]);'><span>
@@ -142,7 +142,7 @@ function Volume() {
 
 		[#else RESULT#]
 			<li><a href="#" [#if SELECT#]class=station_select[#endif SELECT#]><span>
-			Добавьте станции
+			<#LANG_ADD_STATION#>
 			</span></a></li>
 		[#endif RESULT#]
 
