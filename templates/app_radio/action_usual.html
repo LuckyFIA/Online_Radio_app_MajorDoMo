@@ -1,3 +1,11 @@
+<?php
+if (file_exists(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php')) {
+     include_once(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php');
+ }
+ if (file_exists(ROOT.'languages/app_radio_default.php')) {
+     include_once(ROOT.'languages/app_radio_default.php');
+ }
+?>
 <style type="text/css">
 
 .app_radio {
@@ -123,6 +131,7 @@ function Volume() {
 	//alert('Vol');
   },30);
 };
+
 </script>
 
 <div class="app_radio"  style="border-radius: 8px 8px; [#if MODE!='menu'#] width:275px;[#endif MODE#]">

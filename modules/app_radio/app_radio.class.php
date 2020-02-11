@@ -13,13 +13,13 @@
  * @author Guntars Strogonovs <gun4as@gmail.com>
  * @version 1.3.2 February 2020
  */
- if (file_exists(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php')) {
+/* if (file_exists(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php')) {
      include_once(ROOT.'languages/app_radio_'.SETTINGS_SITE_LANGUAGE.'.php');
  }
  if (file_exists(ROOT.'languages/app_radio_default.php')) {
      include_once(ROOT.'languages/app_radio_default.php');
  }
-
+*/
 
 class app_radio extends module
 {
