@@ -92,13 +92,13 @@ XBMC, VLC over HTTP, MPD.
 <br><br>
 <#LANG_USE_SCRIPT#>:
 <br>
-<b>cm('RadioSetting.Control', array('play'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'play'));</b> - <#LANG_LAST_STATION#>.
+<b>cm('RadioSetting.Control', array('play'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('cmd'=>'play'));</b> - <#LANG_LAST_STATION#>.
 <br>
-<b>cm('RadioSetting.Control', array('stop'));</b> или <b>cm('RadioSetting.Control', array('cmd'=>'stop'));</b> - <#LANG_STOP_PLAY#>.
+<b>cm('RadioSetting.Control', array('stop'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('cmd'=>'stop'));</b> - <#LANG_STOP_PLAY#>.
 <br>
-<b>cm('RadioSetting.Control', array('vol34'));</b> или <b>cm('RadioSetting.Control', array('vol'=>34));</b> - <#LANG_SET_VOLUME#> 34% (0-100).
+<b>cm('RadioSetting.Control', array('vol34'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('vol'=>34));</b> - <#LANG_SET_VOLUME#> 34% (0-100).
 <br>
-<b>cm('RadioSetting.Control', array('sta:val'));</b> или <b>cm('RadioSetting.Control', array('sta'=>'val'));</b> - <#LANG_SET_STATION_VAL#> <b>val</b>, <#LANG_WHERE#> <b>val</b> ID <#LANG_OR_STATION_NAME#>.
+<b>cm('RadioSetting.Control', array('sta:val'));</b> <#LANG_OR#> <b>cm('RadioSetting.Control', array('sta'=>'val'));</b> - <#LANG_SET_STATION_VAL#> <b>val</b>, <#LANG_WHERE#> <b>val</b> ID <#LANG_OR_STATION_NAME#>.
 <br><br>
 <#LANG_RESPECTIVELY#>:<br>
 <b>cm('RadioSetting.Control', array('sta'=>'Зайцев.FM', 'cmd'=>'play', 'vol'=>30));</b>
