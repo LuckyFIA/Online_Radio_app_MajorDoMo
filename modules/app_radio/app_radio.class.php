@@ -298,30 +298,19 @@ class app_radio extends module
     function select_player(&$out){
         global $cmd;
         global $volume;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $play_terminal = getGlobal('RadioSetting.PlayTerminal');
-        echo $play_terminal;
-
-        $url=BASE_URL.ROOTHTML.'popup/app_player.html?ajax=1&play_terminal='.$play_terminal;
-
         if($cmd=='play'){
-         sg('RadioSetting.On',1);
-         $url.="&command=play&param=".urlencode($out['PLAY']);
+            sg('RadioSetting.On',1);
+            playMedia($out['PLAY'], $play_terminal);
         }
          else if($cmd=='stop'){
-         sg('RadioSetting.On',0);
-         $url.="&command=stop";
+            sg('RadioSetting.On',0);
+            stopMedia($play_terminal);
+        } else if($cmd=='vol') {
+            sg('RadioSetting.VolumeLevel', $volume);
+            setPlayerVolume($play_terminal, $volume);
         }
-        else if($cmd=='vol')
-        {
-         sg('RadioSetting.VolumeLevel', $volume);
-         $url.="&command=set_volume&param=".$volume;
-        }
-        curl_setopt($ch, CURLOPT_URL, $url);
-        $res=curl_exec($ch);
-        curl_close($ch);
     }
 
     function view_stations(&$out)
