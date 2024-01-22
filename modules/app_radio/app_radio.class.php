@@ -245,10 +245,10 @@ class app_radio extends module
 
 	function change_station($val)
 	{
-		$res = SQLSelect("SELECT ID FROM app_radio WHERE name='$val'");
+		$res = SQLSelect("SELECT * FROM app_radio WHERE name='$val' or ID='$val'");
 		if ($res[0]['ID']) {
 			sg('RadioSetting.LastStationID',$res[0]['ID']);
-			sg('RadioSetting.LastStationName',$val);
+			sg('RadioSetting.LastStationName',$res[0]['name']);
 			$this->control('st_change');
 		}
 		else
